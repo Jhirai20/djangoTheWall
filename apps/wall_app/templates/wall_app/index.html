@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+<body>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+    </head>
+    <body>
+        <div class="container">
+                {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %} {% endif %}
+                        {{ message }}
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            <div class="row">
+                <div class="col-6">
+                    <h1 class="display-6">Registration</h1>
+                    <form action="/register" method="post"> {%csrf_token%}
+                        <div class="form-group">
+                        <label for="">First Name:</label>
+                        <input type="text" class="form-control" name="first_name">
+                        <label for="">Last Name:</label>
+                        <input type="text" class="form-control" name="last_name">
+                        <label for="">Email:</label>
+                        <input type="text" class="form-control" name="email">
+                        <label for="">Password:</label>
+                        <input type="password" class="form-control" name="password">
+                        <label for="">Confirm Password:</label>
+                        <input type="password" class="form-control" name="confirm_password">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+                <div class="col-6">
+                    <h1 class="display-6">Login</h1>
+                    <form action="/login" method="POST">{%csrf_token%}
+                        <div class="form-group">
+                            <label for="">Email:</label>
+                            <input type="email" class="form-control" name="email">
+                            <label for="">Password:</label>
+                            <input type="password" class="form-control" name="password">
+                        </div>
+                            <button type="submit" class="btn btn-primary">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+    </html>
+</body>
+</html>

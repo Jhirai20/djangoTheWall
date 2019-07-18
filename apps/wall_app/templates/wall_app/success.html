@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+<body>
+        <!-- {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %} {% endif %}
+                {{ message }}
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %} -->
+    <div class="container">
+    <div class="row-lg" >
+    <nav class="navbar navbar-light bg-light">
+        <div class="col-6-lg">
+            <h3 class="display-7">CodingDojo Wall</h3>
+        </div>
+        <div class="col-4-sm">
+            <p class="lead">Welcome {{user}}</p>
+        </div>
+        <div class="col-2-lg">
+            <p class="lead"><a class="btn btn-secondary btn-md" href="/logout" role="button">Log Off</a></p>
+        </div>
+    </div>
+    </nav ></div>
+    
+    <hr class="my-1">
+    <div name="body" class="container">
+        <div class="row">
+            <div class="col-12">
+            <form action="/message" method="POST">
+                {%csrf_token%}
+                <label for="">Post a message</label>
+                <textarea class="form-control" name="message" id="" rows="2"></textarea> <br>
+                <input type="hidden" name="id" value='{{requst.session.email}}'>
+                <input type='submit' class="btn btn-primary" value="Post a Message" >
+            </form>
+            </div>
+        </div><br>
+        {%for message in messages%}
+        <br><div class="row-lg">
+            <div class="col-12"><h7 class="lead-4">{{message.user.first_name}} {{message.user.last_name}} - {{message.created_at}}</h7></div>
+            <div class="col-12"></div><p class="lead-4">{{message.message}}</p>
+        </div>
+            {%for comment in comments%}
+            {%if comment.message.id == message.id%}
+            <br><div class="row"> 
+                <div class="col-12"><h7 class="lead-4">{{comment.user.first_name}} {{comment.user.last_name}} - {{comment.user.created_at}}</h7></div>
+                <div class="col-12"><p class="lead-4">{{comment.comment}}</p></div><form action="/deletec" method="POST"> {%csrf_token%} <input name="commentid" value="{{comment.id}}" type="hidden"> <input class="btn-sm btn-danger" value='delete' type="submit"></form>
+            </div>
+            {%endif%}
+            {%endfor%}
+            <div class="row">
+            <div class="col-12">
+                <form action="/comment" method="POST">
+                    {%csrf_token%}
+                    <label >Post a comment</label>
+                    <textarea class="form-control" name="comment" rows="2"></textarea> <br>
+                    <input name="message_id" type="hidden" value="{{message.id}}">
+                    <input type='submit' class="btn btn-success" value="Post a Comment">
+                </form>
+                
+            </div>
+            </div>
+        {%endfor%}
+        
+    </div>
+</div>
+</body>
+</html>
